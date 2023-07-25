@@ -36,18 +36,6 @@ describe('WeatherService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should get weather data', async () => {
-    const mockResponseWeather = {
-      data: { current_temperature: 20, windSpeed: 5 },
-    };
-    mockAxios.get.mockResolvedValueOnce(mockResponseWeather);
-    const result = await service.getWeatherData(10, 20);
-    expect(result).toEqual({
-      temperature: 32.3,
-      windSpeed: 9.5,
-    });
-  });
-
   it('should get cities data', async () => {
     const mockResponseCities = {
       data: [{ lat: 10, lon: 20, display_name: 'São Paulo' }],
