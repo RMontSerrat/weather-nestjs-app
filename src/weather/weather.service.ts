@@ -1,5 +1,3 @@
-// src/weather/weather.service.ts
-
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 
@@ -10,7 +8,6 @@ export class WeatherService {
       `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current_weather=true`,
     );
     const weatherData = response.data;
-    console.log(weatherData, 'weatherData');
     return weatherData.current_weather;
   }
 

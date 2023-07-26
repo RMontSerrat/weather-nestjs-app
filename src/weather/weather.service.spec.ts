@@ -1,5 +1,3 @@
-// src/weather/weather.service.spec.ts
-
 import { Test, TestingModule } from '@nestjs/testing';
 import { WeatherService } from './weather.service';
 import mockAxios from 'jest-mock-axios';

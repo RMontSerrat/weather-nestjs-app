@@ -1,5 +1,3 @@
-// src/weather/weather.controller.spec.ts
-
 import { Test, TestingModule } from '@nestjs/testing';
 import { WeatherController } from './weather.controller';
 import { WeatherService } from './weather.service';
