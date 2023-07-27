@@ -1,49 +1,71 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { WeatherService } from './weather.service';
-import mockAxios from 'jest-mock-axios';
-import { HttpService } from '@nestjs/axios';
+import { Test, TestingModule } from '@nestjs/testing';
+import axios from 'axios';
+
+jest.mock('axios');
+
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('WeatherService', () => {
-  let service: WeatherService;
-
-  let mockHttpService: { get: jest.Mock };
+  let weatherService: WeatherService;
 
   beforeEach(async () => {
-    mockHttpService = {
-      get: jest.fn(),
-    };
-
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        WeatherService,
-        {
-          provide: HttpService,
-          useValue: mockHttpService,
-        },
-      ],
+      providers: [WeatherService],
     }).compile();
 
-    service = module.get<WeatherService>(WeatherService);
+    weatherService = module.get<WeatherService>(WeatherService);
   });
 
-  afterEach(() => {
-    mockAxios.reset();
-  });
-
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-
-  it('should get cities data', async () => {
-    const mockResponseCities = {
-      data: [{ lat: 10, lon: 20, display_name: 'São Paulo' }],
+  it('should get weather data', async () => {
+    const mockResponse = {
+      data: {
+        current_weather: {
+          temperature: 20,
+          windspeed: 5,
+          winddirection: 180,
+          weathercode: 200,
+          is_day: true,
+          time: '10:00:00',
+        },
+      },
     };
-    mockAxios.get.mockResolvedValueOnce(mockResponseCities);
-    const result = await service.getCities('São Paulo');
-    expect(result[0]).toEqual({
-      lat: '-23.5506507',
-      lon: '-46.6333824',
-      name: 'São Paulo, Região Imediata de São Paulo, Região Metropolitana de São Paulo, Região Geográfica Intermediária de São Paulo, São Paulo, Southeast Region, 01001-000, Brazil',
+    mockedAxios.get.mockResolvedValueOnce(mockResponse);
+
+    const lat = 10;
+    const lon = 20;
+    const result = await weatherService.getWeatherData(lat, lon);
+
+    expect(result).toEqual({
+      temperature: 20,
+      windspeed: 5,
+      winddirection: 180,
+      weathercode: 200,
+      is_day: true,
+      time: '10:00:00',
     });
+  });
+
+  it('should get cities', async () => {
+    const mockResponse = {
+      data: [
+        {
+          display_name: 'São Paulo',
+          lat: '10',
+          lon: '20',
+        },
+      ],
+    };
+    mockedAxios.get.mockResolvedValueOnce(mockResponse);
+
+    const result = await weatherService.getCities('São Paulo');
+
+    expect(result).toEqual([
+      {
+        name: 'São Paulo',
+        lat: '10',
+        lon: '20',
+      },
+    ]);
   });
 });

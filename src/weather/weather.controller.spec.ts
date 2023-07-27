@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { WeatherController } from './weather.controller';
 import { WeatherService } from './weather.service';
+import { WeatherData, CityData } from './weather.interfaces';
 
 describe('WeatherController', () => {
   let weatherController: WeatherController;
@@ -21,9 +22,13 @@ describe('WeatherController', () => {
   });
 
   it('should get weather data', async () => {
-    const result = {
+    const result: WeatherData = {
       temperature: 20,
-      windSpeed: 5,
+      windspeed: 5,
+      winddirection: 10,
+      weathercode: 1,
+      is_day: 1,
+      time: '2022-10-10T10:00:00',
     };
 
     jest
@@ -34,11 +39,11 @@ describe('WeatherController', () => {
   });
 
   it('should get cities data', async () => {
-    const result = [
+    const result: CityData[] = [
       {
         name: 'São Paulo',
-        lat: 10,
-        lon: 20,
+        lat: '10',
+        lon: '20',
       },
     ];
 

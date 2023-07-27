@@ -1,3 +1,5 @@
+#Weather API
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
@@ -24,7 +26,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is a weather API built using the [Nest](https://github.com/nestjs/nest) framework. This API provides real-time weather information for any city globally, such as temperature, wind speed and direction, weather code, day or night indication, and the current time. It's built with scalability and efficiency in mind, perfect for integrating with any application that requires weather data.
 
 ## Installation
 
